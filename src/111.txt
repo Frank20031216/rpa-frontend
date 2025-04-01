@@ -1,0 +1,25 @@
+To have this happen automatically for branches without a tracking
+upstream, see 'push.autoSetupRemote' in 'git help config'.
+upstream, see 'push.autoSetupRemote' in 'git help config'.
+
+
+PS D:\桌面\rpa-frontend> git push --set-upstream origin master
+fatal: unable to access 'https://github.com/EP-Antares/rpa-frontend.git/': Recv failure: Connection was reset
+PS D:\桌面\rpa-frontend> git push --set-upstream origin master
+fatal: unable to access 'https://github.com/EP-Antares/rpa-frontend.git/': Failed to connect to github.com port 443 after 21046 ms: Couldn't connect to server
+PS D:\桌面\rpa-frontend> git push --set-upstream origin master
+fatal: unable to access 'https://github.com/EP-Antares/rpa-frontend.git/': Failed to connect to github.com port 443 after 21015 ms: Couldn't connect to server
+PS D:\桌面\rpa-frontend> git add .
+PS D:\桌面\rpa-frontend> git push
+fatal: unable to access 'https://github.com/Frank20031216/rpa-frontend.git/': Recv failure: Connection was reset
+PS D:\桌面\rpa-frontend> git add .
+warning: in the working copy of 'src/App.js', LF will be replaced by CRLF the next time Git touches it
+PS D:\桌面\rpa-frontend> git commit - m "2025/4/1"
+error: pathspec '-' did not match any file(s) known to git
+error: pathspec 'm' did not match any file(s) known to git
+error: pathspec '2025/4/1' did not match any file(s) known to git
+PS D:\桌面\rpa-frontend> git commit - m "2025/4/1"^C
+PS D:\桌面\rpa-frontend> git commit -m "2025/4/1" 
+[master 9dae8fe] 2025/4/1
+ 1 file changed, 22 insertions(+)
+PS D:\桌面\rpa-frontend> 
