@@ -31,3 +31,25 @@ function App() {
 }
 
 export default App;
+
+// function App() {
+//   return (
+//     <Router>
+//       <div className="App">
+//         <Routes>
+//           {/* 登录页面路由 */}
+//           <Route path="/" element={<Login />} />
+//           {/* 注册页面路由 */}
+//           <Route path="/register" element={<Register />} />
+//           {/* 普通用户页面路由 */}
+//           <Route path="/user/*" element={<NormalUser />} />
+//           {/* 财务页面路由 */}
+//           <Route path="/accountant/*" element={<Accountant />} />
+//           {/* 管理员页面路由 */}          
+//           <Route path="/admin" element={<Admin />} />
+          
+//         </Routes>
+//       </div>
+//     </Router>
+//   );
+// }
