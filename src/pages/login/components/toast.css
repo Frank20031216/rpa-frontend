@@ -1,0 +1,36 @@
+.toast {
+    position: fixed;
+    top: 50%;          /* 将top设置为视口高度的50% */
+    left: 50%;         /* 将left设置为视口宽度的50% */
+    transform: translate(-50%, -120%);  /* 使用transform属性将Toast向左和向上偏移，使其居中并显示在register-container上方 */
+    padding: 15px;
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.toast.error {
+    background-color: #ff4d4d;
+}
+
+.toast.success {
+    background-color: #4caf50;
+}
+
+.toast-message {
+    flex-grow: 1;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 10px;
+}
