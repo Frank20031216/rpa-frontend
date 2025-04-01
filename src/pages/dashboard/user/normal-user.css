@@ -1,0 +1,43 @@
+.container {
+    display: flex;
+    height: 100vh; /* 占满整个视口高度 */
+  }
+  
+  .sidebar {
+    width: 200px;
+    background-color: #f8f9fa; /* 侧边栏背景颜色 */
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    position: fixed; /* 固定位置 */
+    height: 100vh;
+    overflow-y: auto; /* 如果内容过多，可以滚动 */
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar li {
+    margin-bottom: 15px;
+  }
+  
+  .sidebar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .sidebar a:hover {
+    color: #007bff; /* 鼠标悬停颜色 */
+  }
+  
+  .content {
+    margin-left: 250px; /* 内容区距离侧边栏距离 */
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+    background-color: #ffffff; /* 右侧内容背景颜色 */
+  }
+  

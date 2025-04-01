@@ -1,0 +1,86 @@
+.reimbursement-record {
+  margin-top: 10px;
+  padding: 20px;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  background-color: #f7f7f7;
+  cursor: pointer;
+}
+
+.tab.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f7f7f7;
+}
+
+  /* 搜索栏的样式 */
+.search-bar {
+  display: flex;
+  gap: 10px; /* 为输入框之间增加间距 */
+  margin: 20px 0; /* 搜索栏上下留白 */
+  justify-content: space-between; /* 让搜索栏输入框均匀分布 */
+  align-items: center;
+}
+
+.search-bar input {
+  padding: 8px 12px; /* 输入框内的留白 */
+  border: 1px solid #ccc; /* 边框颜色 */
+  border-radius: 4px; /* 圆角边框 */
+  width: 30%; /* 输入框的宽度占比，适配不同屏幕 */
+  font-size: 14px; /* 字体大小 */
+}
+
+.search-bar input:focus {
+  border-color: #007bff; /* 获取焦点时的边框颜色 */
+  outline: none; /* 移除默认的 `focus` 样式 */
+  box-shadow: 0 0 5px #007bff; /* 焦点时的阴影效果 */
+}
+
+.approved-amount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.amount-title {
+  font-size: 14px;
+  color: #999;
+  margin-bottom: 5px;
+}
+
+.amount-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: #e9e10d;
+}
+
+
+
