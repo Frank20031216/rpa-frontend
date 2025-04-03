@@ -6,13 +6,13 @@ body {
   }
   
   .container {
-    max-width: 2200px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
   }
   
   header {
-    background-color: #333;
+    background-color: #007bff;
     color: #fff;
     padding: 10px 0;
     text-align: center;
@@ -61,4 +61,27 @@ body {
     padding: 10px 0;
     background-color: #333;
     color: #fff;
+  }
+
+    /* 搜索栏的样式 */
+.search-bar {
+    display: flex;
+    gap: 10px; /* 为输入框之间增加间距 */
+    margin: 20px 0; /* 搜索栏上下留白 */
+    justify-content: space-between; /* 让搜索栏输入框均匀分布 */
+    align-items: center;
+  }
+  
+  .search-bar input {
+    padding: 8px 12px; /* 输入框内的留白 */
+    border: 1px solid #ccc; /* 边框颜色 */
+    border-radius: 4px; /* 圆角边框 */
+    width: 30%; /* 输入框的宽度占比，适配不同屏幕 */
+    font-size: 14px; /* 字体大小 */
+  }
+  
+  .search-bar input:focus {
+    border-color: #007bff; /* 获取焦点时的边框颜色 */
+    outline: none; /* 移除默认的 `focus` 样式 */
+    box-shadow: 0 0 5px #007bff; /* 焦点时的阴影效果 */
   }

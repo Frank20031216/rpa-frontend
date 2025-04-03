@@ -22,7 +22,7 @@ function App() {
           {/* 财务页面路由 */}
           <Route path="/accountant/*" element={<Accountant />} />
           {/* 管理员页面路由 */}          
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/*" element={<Admin />} />
           
         </Routes>
       </div>
