@@ -36,7 +36,7 @@ function Login() {
     //   .catch(error => console.log('error', error));
     // // 根据 role 字段进行页面跳转
 
-    setRole('admin');
+    setRole('accountant');
   };
   useEffect(() => {
     console.log(role);

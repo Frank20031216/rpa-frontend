@@ -89,4 +89,41 @@
     background-color: #0056b3;
   }
   
-  
+
+  .verification-buttons {
+    display: flex; /* 使用 flex 布局，使按钮水平排列 */
+    justify-content: center; /* 按钮之间有间隔 */
+    gap: 10px; /* 按钮之间的间隔 */
+    margin: 20px auto; /* 上下边距20px，左右自动居中 */
+  }
+
+
+/* Submit Button */
+.verification-buttons button {
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+/* Error Button */
+.verification-buttons button:nth-child(1) {
+  background-color: #dc3545; /* 红色背景 */
+}
+
+.verification-buttons button:nth-child(1):hover {
+  background-color: #a71d2a; /* 鼠标悬停时的深红色背景 */
+}
+
+/* Correct Button */
+.verification-buttons button:nth-child(2) {
+  background-color: #28a745; /* 绿色背景 */
+}
+
+.verification-buttons button:nth-child(2):hover {
+  background-color: #1e6e2f; /* 鼠标悬停时的深绿色背景 */
+}

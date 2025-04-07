@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import MyPageA from './components/my-page-a.js'; // 我的
 import ReimbursementAudit from './components/reimbursement-audit.js'; // 审核报销
 import RpaUpload from './components/rpa-upload.js'; // RPA上传
+import ReimbursementDetail from './components/reimbursement-detail.js';
 //import './accountant.css';
 
 function Accountant() {
@@ -30,6 +31,7 @@ function Accountant() {
                     <Route path = "components/my-page-a" element = {<MyPageA/>} />
                     <Route path = "components/reimbursement-audit" element = {<ReimbursementAudit/>} />
                     <Route path = "components/rpa-upload" element = {<RpaUpload/>} />
+                    <Route path = "components/reimbursement-detail/:id" element={<ReimbursementDetail />} />
                 </Routes>
             </div>
         </div>

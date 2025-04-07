@@ -1,0 +1,119 @@
+/* 基础容器 - 保持与主界面一致的视觉风格 */
+.detail-container {
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* 标题样式 */
+  .detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e8e8e8;
+  }
+  
+  .detail-title {
+    font-size: 20px;
+    color: #333;
+    margin: 0;
+  }
+  
+  /* 详情卡片布局 */
+  .detail-card {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  
+  .detail-section {
+    background: #fafafa;
+    padding: 16px;
+    border-radius: 4px;
+    border: 1px solid #e8e8e8;
+  }
+  
+  .detail-section h3 {
+    color: #1890ff;
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 16px;
+  }
+  
+  /* 信息项样式 - 与表格对齐 */
+  .detail-item {
+    display: flex;
+    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  .detail-label {
+    width: 100px;
+    color: #666;
+    font-weight: 500;
+  }
+  
+  .detail-value {
+    flex: 1;
+    color: #333;
+    word-break: break-word;
+  }
+  
+  /* 操作按钮组 - 保持与主界面相同交互 */
+  .detail-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #e8e8e8;
+  }
+  
+  .action-button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s;
+  }
+  
+  .approve-btn {
+    background-color: #52c41a;
+    color: white;
+    border: 1px solid #52c41a;
+  }
+  
+  .reject-btn {
+    background-color: #ff4d4f;
+    color: white;
+    border: 1px solid #ff4d4f;
+  }
+  
+  .back-btn {
+    background-color: white;
+    color: #1890ff;
+    border: 1px solid #1890ff;
+  }
+  
+  /* 响应式适配 */
+  @media (max-width: 768px) {
+    .detail-card {
+      grid-template-columns: 1fr;
+    }
+    
+    .detail-item {
+      flex-direction: column;
+    }
+    
+    .detail-label {
+      width: auto;
+      margin-bottom: 4px;
+    }
+  }

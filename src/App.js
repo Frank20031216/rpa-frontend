@@ -21,9 +21,9 @@ function App() {
           <Route path="/user/*" element={<NormalUser />} />
           {/* 财务页面路由 */}
           <Route path="/accountant/*" element={<Accountant />} />
-          {/* 管理员页面路由 */}          
+          {/* 管理员页面路由 */}
           <Route path="/admin/*" element={<Admin />} />
-          
+
         </Routes>
       </div>
     </Router>
