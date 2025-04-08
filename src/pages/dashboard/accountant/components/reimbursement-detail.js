@@ -11,11 +11,15 @@ const ReimbursementDetail = () => {
 
   // 定义更新状态的函数
   const handleStatusUpdate = async (newStatus) => {
-    // 调用全局更新逻辑（假设有一个全局函数 updateReimbursementStatus）
-    const updatedDetail = await updateReimbursementStatus(itemId, newStatus);
-    if (updatedDetail) {
-      // 更新成功后，重新加载详情页或返回列表
-      navigate(-1);
+    try {
+      const updatedDetail = await updateReimbursementStatus(detail.reimbursementNumber, newStatus);
+      if (updatedDetail) {
+        // 更新成功后，返回列表
+        navigate(-1);
+      }
+    } catch (error) {
+      console.error('更新状态失败:', error);
+      // 可以考虑在这里增加错误提示
     }
   };
 
@@ -23,7 +27,7 @@ const ReimbursementDetail = () => {
     <div className="detail-container">
       <div className="detail-header">
         <h2 className="detail-title">报销单详情</h2>
-        <button 
+        <button
           className="back-btn action-button"
           onClick={() => navigate(-1)}
         >
@@ -34,18 +38,42 @@ const ReimbursementDetail = () => {
       <div className="detail-card">
         {/* 基础信息区块 */}
         <div className="detail-section">
-          <h3>基本信息</h3>
+          <h3>发票信息</h3>
           <div className="detail-item">
-            <span className="detail-label">报销编号</span>
-            <span className="detail-value">{detail.reimbursementNumber}</span>
+            <span className="detail-label">单位名称</span>
+            <span className="detail-value">{detail.seller || 'N/A'}</span>
           </div>
           <div className="detail-item">
-            <span className="detail-label">报销标题</span>
-            <span className="detail-value">{detail.title}</span>
+            <span className="detail-label">单位名称（原字段）</span>
+            <span className="detail-value">{detail.company || 'N/A'}</span>
           </div>
           <div className="detail-item">
-            <span className="detail-label">报销金额</span>
-            <span className="detail-value">¥{detail.amount?.toLocaleString()}</span>
+            <span className="detail-label">报销人</span>
+            <span className="detail-value">{detail.buyer || 'N/A'}</span>
+          </div>
+          <div className="detail-item">
+            <span className="detail-label">发票金额（含税）（文字表述）</span>
+            <span className="detail-value">{detail.totalWithTaxInWords || 'N/A'}</span>
+          </div>
+          <div className="detail-item">
+            <span className="detail-label">发票金额（不含税）（数字表述）</span>
+            <span className="detail-value">¥{detail.totalWithoutTaxInNumbers?.toLocaleString() || 'N/A'}</span>
+          </div>
+          <div className="detail-item">
+            <span className="detail-label">发票日期</span>
+            <span className="detail-value">{detail.invoiceDate || 'N/A'}</span>
+          </div>
+          <div className="detail-item">
+            <span className="detail-label">发票代码</span>
+            <span className="detail-value">{detail.invoiceCode || 'N/A'}</span>
+          </div>
+          <div className="detail-item">
+            <span className="detail-label">发票号码</span>
+            <span className="detail-value">{detail.invoiceNumber || 'N/A'}</span>
+          </div>
+          <div className="detail-item">
+            <span className="detail-label">验证码</span>
+            <span className="detail-value">{detail.verificationCode || 'N/A'}</span>
           </div>
         </div>
 
@@ -54,20 +82,44 @@ const ReimbursementDetail = () => {
           <h3>审批信息</h3>
           <div className="detail-item">
             <span className="detail-label">报销人</span>
-            <span className="detail-value">{detail.auditor}</span>
+            <span className="detail-value">{detail.buyer || 'N/A'}</span>
           </div>
           <div className="detail-item">
             <span className="detail-label">所属部门</span>
-            <span className="detail-value">{detail.company}</span>
+            <span className="detail-value">{detail.seller || 'N/A'}</span>
           </div>
           <div className="detail-item">
             <span className="detail-label">当前状态</span>
-            <span className="detail-value" style={{ 
-              color: detail.status === 'approved' ? '#52c41a' : '#ff4d4f' 
+            <span className="detail-value" style={{
+              color: detail.status === 'approved' ? '#52c41a' : '#ff4d4f'
             }}>
-              {detail.status === 'pending' ? '待审核' : 
-               detail.status === 'approved' ? '已报销' : '已拒绝'}
+              {detail.status === 'pending' ? '待审核' :
+                detail.status === 'approved' ? '已报销' : '已拒绝'}
             </span>
+          </div>
+          <div className="detail-item">
+            <span className="detail-label">总金额（含税）大写</span>
+            <span className="detail-value">{detail.totalWithTaxInWords || 'N/A'}</span>
+          </div>
+          <div className="detail-item">
+            <span className="detail-label">校验码</span>
+            <span className="detail-value">{detail.verificationCode || 'N/A'}</span>
+          </div>
+          <div className="detail-item">
+            <span className="detail-label">不含税总金额（数字）</span>
+            <span className="detail-value">{detail.totalWithoutTaxInNumbers?.toLocaleString() || 'N/A'}</span>
+          </div>
+          <div className="detail-item">
+            <span className="detail-label">发票日期</span>
+            <span className="detail-value">{detail.invoiceDate || 'N/A'}</span>
+          </div>
+          <div className="detail-item">
+            <span className="detail-label">发票代码</span>
+            <span className="detail-value">{detail.invoiceCode || 'N/A'}</span>
+          </div>
+          <div className="detail-item">
+            <span className="detail-label">发票号码</span>
+            <span className="detail-value">{detail.invoiceNumber || 'N/A'}</span>
           </div>
         </div>
       </div>
@@ -75,13 +127,13 @@ const ReimbursementDetail = () => {
       {/* 操作按钮（如果是待审核状态显示） */}
       {detail.status === 'pending' && (
         <div className="detail-actions">
-          <button 
+          <button
             className="approve-btn action-button"
             onClick={() => handleStatusUpdate('approved')}
           >
             通过
           </button>
-          <button 
+          <button
             className="reject-btn action-button"
             onClick={() => handleStatusUpdate('rejected')}
           >
