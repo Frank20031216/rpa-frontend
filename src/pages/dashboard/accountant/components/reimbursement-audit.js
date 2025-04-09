@@ -232,6 +232,8 @@ import './reimbursement-audit.css';
 import { updateReimbursementStatus } from './utils';
 
 function ReimbursementAudit() {
+
+  const [editCount, setEditCount] = useState(0);
   const [auditItems, setAuditItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -247,13 +249,25 @@ function ReimbursementAudit() {
   const reviewedCount = auditItems.filter(item => item.status === 'approved' || item.status === 'rejected').length;
   const navigate = useNavigate();
 
+  function getCookie(name) {
+    const cookieArray = document.cookie.split('; '); // 按照分号和空格分割
+    for (let i = 0; i < cookieArray.length; i++) {
+        const cookiePair = cookieArray[i].split('='); // 按照等号分割
+        if (name === cookiePair[0]) {
+            return decodeURIComponent(cookiePair[1]); // 返回解码后的值
+        }
+    }
+    return null; // 如果没有找到对应的 Cookie，返回 null
+}
+
   useEffect(() => {
     // Fetch data from the API
+    console.log(getCookie('Authorization'))
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://122.228.26.226:58359/accountant/page?page=${currentPage}&pageSize=${itemsPerPage}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/accountant/page?page=${currentPage}&pageSize=${itemsPerPage}`, {
           method: 'GET',
-          redirect: 'follow'
+          credentials: 'include'
         });
 
         if (!response.ok) {
@@ -261,6 +275,7 @@ function ReimbursementAudit() {
         }
 
         const data = await response.json();
+        console.log(data)
         if (data.status === '200') {
           setAuditItems(data.data.record);
           setFilteredItems(data.data.record);
@@ -277,7 +292,7 @@ function ReimbursementAudit() {
     };
 
     fetchData();
-  }, [currentPage, itemsPerPage]);
+  }, [currentPage, itemsPerPage,editCount]);
 
   // Handle search when searchParams change
   useEffect(() => {
@@ -308,6 +323,7 @@ function ReimbursementAudit() {
       // 更新本地状态
       setAuditItems(auditItems.map(it => it.id === item.id ? updatedDetail : it));
     }
+    setEditCount(editCount + 1);
   };
 
   const handleSearchChange = (e) => {

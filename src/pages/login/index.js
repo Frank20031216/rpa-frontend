@@ -19,24 +19,23 @@ function Login() {
       method: 'POST',
       account: account,
       password: password,
-      credentials: 'include',
     };
 
-    // console.log('登录请求参数:', requestOptions);
-    // //fetch('http://192.168.1.104:8080/api/login?account=${encodeURIComponent(account)}&password=${encodeURIComponent(password)}', requestOptions)
-    // fetch(`https://122.228.26.226:58359/api/login?account=${encodeURIComponent(account)}&password=${encodeURIComponent(password)}`, requestOptions)
-    //   .then(response => response.json())
-    //   //.then(result => console.log(result))
-    //   //.then(result => setRole(result.data.role))
-    //   .then(result => {
-    //     // 保存token到cookie，仅限当前会话
-    //     setCookie(result.data.tokenName, result.data.tokenValue)
-    //     setRole(result.data.role);
-    //   })
-    //   .catch(error => console.log('error', error));
-    // // 根据 role 字段进行页面跳转
+    console.log('登录请求参数:', requestOptions);
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/api/login?account=${encodeURIComponent(account)}&password=${encodeURIComponent(password)}`, requestOptions)
+    //fetch(`https://122.228.26.226:58359/api/login?account=${encodeURIComponent(account)}&password=${encodeURIComponent(password)}`, requestOptions)
+      .then(response => response.json())
+      //.then(result => console.log(result))
+      //.then(result => setRole(result.data.role))
+      .then(result => {
+        // 保存token到cookie，仅限当前会话
+        setCookie(result.data.tokenName, result.data.tokenValue)
+        setRole(result.data.role);
+      })
+      .catch(error => console.log('error', error));
+    // 根据 role 字段进行页面跳转
 
-    setRole('accountant');
+
   };
   useEffect(() => {
     console.log(role);

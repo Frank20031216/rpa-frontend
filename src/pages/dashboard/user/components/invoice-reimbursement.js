@@ -30,12 +30,12 @@ function InvoiceReimbursement() {
       const ocrFormData = new FormData();
       ocrFormData.append("file", file, file.name);
       console.log('获取的Token:', getCookie('Authorization'));
-      const ocrResponse = await fetch("https://122.228.26.226:58359/user/ocr", {
+      const ocrResponse = await fetch(`${process.env.REACT_APP_API_BASE_URL}/user/ocr`, {
         method: "POST",
-        headers: {  // 修正：headers应该是一个对象
-          'Authorization': `Bearer ${getCookie('Authorization')}`,
-          // 注意：不要手动设置Content-Type，FormData会自动设置
-        },
+        // headers: {  // 修正：headers应该是一个对象
+        //   'Authorization': `Bearer ${getCookie('Authorization')}`,
+        //   // 注意：不要手动设置Content-Type，FormData会自动设置
+        // },
         credentials: 'include',  // 如果需要携带cookie，取消注释这行
         body: ocrFormData,
       });
@@ -92,7 +92,7 @@ function InvoiceReimbursement() {
       //上传图片
       const uploadFormData = new FormData();
       uploadFormData.append("file", uploadImage);
-      const uploadResponse = await fetch("https://122.228.26.226:58359/user/upload", {
+      const uploadResponse = await fetch(`${process.env.REACT_APP_API_BASE_URL}/user/upload`, {
         method: "POST",
         body: uploadFormData,
         credentials: 'include',
@@ -116,7 +116,7 @@ function InvoiceReimbursement() {
         image: uploadResult.data,
       };
 
-      const saveResponse = await fetch("https://122.228.26.226:58359/user/save", {
+      const saveResponse = await fetch(`${process.env.REACT_APP_API_BASE_URL}/user/save`, {
         method: "POST",
         credentials: 'include',
         headers: {

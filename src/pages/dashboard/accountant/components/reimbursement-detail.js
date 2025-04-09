@@ -93,7 +93,7 @@ const ReimbursementDetail = () => {
             <span className="detail-value" style={{
               color: detail.status === 'approved' ? '#52c41a' : '#ff4d4f'
             }}>
-              {detail.status === 'pending' ? '待审核' :
+              {detail.status === 'wait' ? '待审核' :
                 detail.status === 'approved' ? '已报销' : '已拒绝'}
             </span>
           </div>
