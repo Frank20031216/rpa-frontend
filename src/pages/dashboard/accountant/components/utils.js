@@ -1,11 +1,12 @@
 // utils.js
 export const updateReimbursementStatus = async (id, updateData) => {
   try {
-    const response = await fetch(`https://122.228.26.226:58359/accountant/update`, {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/accountant/update`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
+      credentials: 'include', 
       body: JSON.stringify(updateData),
     });
 

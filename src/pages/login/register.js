@@ -54,7 +54,7 @@ function Register() {
       redirect: 'follow'
     };
 
-    fetch("https://122.228.26.226:58359/api/register", requestOptions)
+    fetch("http://localhost:8080/api/register", requestOptions)
       .then(response => response.json())
       .then(result => {
         if (result.status !== '200') {
