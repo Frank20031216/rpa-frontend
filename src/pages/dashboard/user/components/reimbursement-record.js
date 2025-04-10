@@ -312,7 +312,7 @@ function ReimbursementRecord() {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `https://122.228.86.226:58359/user/page?page=${currentPage}&pageSize=${itemsPerPage}`,
+        `${process.env.REACT_APP_API_BASE_URL}/user/page?page=${currentPage}&pageSize=${itemsPerPage}`,
         {
           method: 'GET',
           redirect: 'follow'
