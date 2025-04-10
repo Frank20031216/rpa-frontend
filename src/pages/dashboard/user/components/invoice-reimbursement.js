@@ -99,9 +99,9 @@ function InvoiceReimbursement() {
       });
 
       const uploadResult = await uploadResponse.json();
-      if (uploadResult.statue !== "200") throw new Error("上传失败");
+      if (uploadResult.status !== "200") throw new Error("上传失败");
 
-      //上传完整数据
+      //上传完整数据s
       const payload = {
         title: formData.reason,
         amount: formData.amount,
