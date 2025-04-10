@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './register.css';
 import { useNavigate } from 'react-router-dom';
-import Toast from './components/toast';
-
+// import Toast from './components/toast';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Register() {
   const navigate = useNavigate();
@@ -16,8 +17,8 @@ function Register() {
     role: 'user',
   });
 
-  const [toastMessage, setToastMessage] = useState('');
-  const [toastType, setToastType] = useState('');
+  // const [toastMessage, setToastMessage] = useState('');
+  // const [toastType, setToastType] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,13 +26,37 @@ function Register() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      //alert('密码与确认密码不一致！');
-      setToastMessage('密码与确认密码不一致！');
-      setToastType('error');
+
+    if (!formData.account) {
+      toast.error("账号不能为空");
       return;
     }
+    if (!formData.password) {
+      toast.error("密码不能为空");
+      return;
+    }
+    if (!formData.confirmPassword) {
+      toast.error("重复密码不能为空");
+      return;
+    }
+    if (formData.password !== formData.confirmPassword) {
+      //alert('密码与确认密码不一致！');
+      // setToastMessage('密码与确认密码不一致！');
+      // setToastType('error');
+      toast.error('密码与确认密码不一致！')
+      return;
+    }
+    if (!formData.realName) {
+      toast.error("姓名不能为空");
+      return;
+    }
+    if (!formData.company) {
+      toast.error("单位不能为空");
+      return;
+    }
+
+    // e.preventDefault();
+
     // 提交逻辑（例如调用API）在这里实现
     console.log('注册表单数据:', formData);
 
@@ -59,24 +84,42 @@ function Register() {
       .then(result => {
         if (result.status !== '200') {
           //alert(`错误: ${result.message}`);
-          setToastMessage(`错误: ${result.message}`);
-          setToastType('error');
+          // setToastMessage(`错误: ${result.message}`);
+          // setToastType('error');
+          toast.error("错误" + result.message)
           return Promise.reject(result.message);
         }
-        setToastMessage('注册成功！');
-        setToastType('success');
+        // setToastMessage('注册成功！');
+        // setToastType('success');
         //alert('注册成功！');
+        toast.success('注册成功！')
         console.log('注册成功:', result);
       })
       .catch(error => {
-        setToastMessage('注册失败，请稍后再试！');
-        setToastType('error');
+        // setToastMessage('注册失败，请稍后再试！');
+        // setToastType('error');
+        toast.error('注册失败，请稍后再试！')
         console.log('error', error);
       });
   };
   return (
     <div className="register-container">
-      <form onSubmit={handleSubmit} className="register-form">
+      {/* Toast容器 */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
+
+
+      <div className="register-form" >
         <div className="form-group">
           <label>账号:</label>
           <input
@@ -152,11 +195,12 @@ function Register() {
           </select>
         </div>
         <div className="button-group">
-          <button type="submit" className="btn btn-primary">注册</button>
+          {/* <button type="submit" className="btn btn-primary">注册</button> */}
+          <button className="btn btn-primary"onClick={handleSubmit}>注册</button>
           <button className="btn btn-secondary" onClick={() => navigate('/')}>返回登录</button>
         </div>
-      </form>
-      {toastMessage && <Toast message={toastMessage} type={toastType} onClose={() => setToastMessage('')} />}
+      </div>
+      {/* {toastMessage && <Toast message={toastMessage} type={toastType} onClose={() => setToastMessage('')} />} */}
     </div>
   );
 };
