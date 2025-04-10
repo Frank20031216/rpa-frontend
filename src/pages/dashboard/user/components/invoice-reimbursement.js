@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './invoice-reimbursement.css';
+import { upload } from '@testing-library/user-event/dist/upload';
 
 function InvoiceReimbursement() {
   const [imageSrc, setImageSrc] = useState(null);
@@ -27,6 +28,9 @@ function InvoiceReimbursement() {
   //OCR识别函数
   const handleOCR = async (file) => {
     try {
+
+      setUploadImage(file);
+      
       const ocrFormData = new FormData();
       ocrFormData.append("file", file, file.name);
       console.log('获取的Token:', getCookie('Authorization'));
@@ -90,16 +94,20 @@ function InvoiceReimbursement() {
   const handleSubmit = async () => {
     try {
       //上传图片
+      console.log('上传图片:', uploadImage);
       const uploadFormData = new FormData();
       uploadFormData.append("file", uploadImage);
       const uploadResponse = await fetch(`${process.env.REACT_APP_API_BASE_URL}/user/upload`, {
         method: "POST",
+        // headers: {
+        //   'Content-Type': 'multipart/form-data',
+        // },
         body: uploadFormData,
         credentials: 'include',
       });
 
       const uploadResult = await uploadResponse.json();
-      if (uploadResult.statue !== "200") throw new Error("上传失败");
+      if (uploadResult.status !== "200") throw new Error("上传失败");
 
       //上传完整数据
       const payload = {

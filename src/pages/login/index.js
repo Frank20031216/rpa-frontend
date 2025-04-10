@@ -81,7 +81,7 @@ function Login() {
           />
         </div>
         <div className="button-group">
-          <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+          <button type="submit" className="btn btn-primary" >
             登录
           </button>
           <button type="button" className="btn btn-secondary" onClick={() => navigate('/register')}>
