@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import './index.css'; // 创建一个 CSS 文件来处理样式
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from "react-toastify";
 
 function Login() {
   const [account, setAccount] = useState('');
@@ -28,12 +29,16 @@ function Login() {
     //   //.then(result => console.log(result))
     //   //.then(result => setRole(result.data.role))
     //   .then(result => {
+    //     if(result.status == 200){
     //     // 保存token到cookie，仅限当前会话
-    //     setCookie(result.data.tokenName, result.data.tokenValue)
+    //     setCookie(result.data.tokenName, result.data.tokenValue);
     //     setRole(result.data.role);
+    //   }else{
+    //     toast.error(result.message);
+    //   }
     //   })
     //   .catch(error => console.log('error', error));
-    // // 根据 role 字段进行页面跳转
+    // 根据 role 字段进行页面跳转
   setRole('user')
 
   };
@@ -47,7 +52,7 @@ function Login() {
       } else if (role === 'admin') {
         navigate('/admin/admin'); // 跳转到管理员页面
       } else {
-        alert('未知角色，无法跳转！');
+        toast.error('未知角色，无法跳转！');
       }
     }
   }, [role]);
@@ -55,6 +60,19 @@ function Login() {
 
   return (
     <div className="login-container">
+      {/* Toast容器 */}
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
+
       <form onSubmit={handleSubmit} className="login-form">
         <div className="form-group">
           <label htmlFor="account">账号</label>
