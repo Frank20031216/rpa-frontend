@@ -24,13 +24,13 @@ function ReimbursementAudit() {
   function getCookie(name) {
     const cookieArray = document.cookie.split('; '); // 按照分号和空格分割
     for (let i = 0; i < cookieArray.length; i++) {
-        const cookiePair = cookieArray[i].split('='); // 按照等号分割
-        if (name === cookiePair[0]) {
-            return decodeURIComponent(cookiePair[1]); // 返回解码后的值
-        }
+      const cookiePair = cookieArray[i].split('='); // 按照等号分割
+      if (name === cookiePair[0]) {
+        return decodeURIComponent(cookiePair[1]); // 返回解码后的值
+      }
     }
     return null; // 如果没有找到对应的 Cookie，返回 null
-}
+  }
 
   useEffect(() => {
     // Fetch data from the API
@@ -64,7 +64,7 @@ function ReimbursementAudit() {
     };
 
     fetchData();
-  }, [currentPage, itemsPerPage,editCount]);
+  }, [currentPage, itemsPerPage, editCount]);
 
   // Handle search when searchParams change
   useEffect(() => {
@@ -83,13 +83,13 @@ function ReimbursementAudit() {
 
   const handleExport = () => {
     console.log('Export to Excel');
-    
+
     // 定义请求选项
     var requestOptions = {
       method: 'GET',
       redirect: 'follow'
     };
-  
+
     // 调用API接口
     fetch(`${process.env.REACT_APP_API_BASE_URL}/accountant/download`, requestOptions)
       .then(response => {
@@ -274,6 +274,11 @@ function ReimbursementAudit() {
           >
             下一页
           </button>
+
+          <span className="page-info">
+            第 {currentPage} 页 / 共 {totalPages} 页
+          </span>
+          
         </div>
       )}
     </div>
