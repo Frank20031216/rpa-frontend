@@ -1,22 +1,22 @@
-.reimbursement-record {
+.invoice-management--record_invoice_management {
   padding: 20px;
 }
 
-.dashboard-header {
-  background-color: #007bff;
+.dashboard-header_invoice_management {
+  background-color: #333;
   color: white;
   padding: 10px 0;
   text-align: center;
   margin-bottom: 20px;
 }
 
-.approved-amount {
+.approved-amount_invoice_management {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 10px;
 }
 
-.amount-stats {
+.amount-stats_invoice_management {
   display: flex;
   justify-content: space-between;
   background-color: #f8f9fa;
@@ -25,28 +25,28 @@
   margin: 20px 0;
 }
 
-.stat-item {
+.stat-item_invoice_management {
   display: flex;
   align-items: center;
 }
 
-.amount-title {
+.amount-title_invoice_management {
   font-weight: bold;
   margin-right: 10px;
 }
 
-.amount-value {
+.amount-value_invoice_management {
   font-weight: bold;
   color: #2c3e50;
 }
 
-.tabs {
+.tabs_invoice_management {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
 
-.tab {
+.tab_invoice_management {
   padding: 8px 16px;
   margin: 0 5px;
   background-color: #f1f1f1;
@@ -54,88 +54,89 @@
   cursor: pointer;
 }
 
-.tab.active {
-  background-color: #007bff;
+.tab.active_invoice_management {
+  background-color: #333;
   color: white;
 }
 
-.search-bar {
+.search-bar_invoice_management {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
 }
 
-.search-bar input {
+.search-bar input_invoice_management {
   padding: 8px;
 }
 
-.invoice-management {
+.invoice-management_invoice_management {
   margin-bottom: 20px;
 }
 
-.invoice-actions {
+.invoice-actions_invoice_management {
   margin-bottom: 10px;
 }
 
-table {
+table_invoice_management {
   width: 100%;
   border-collapse: collapse;
 }
 
-th, td {
+th_invoice_management, td_invoice_management {
   padding: 8px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
 
-button {
+button_invoice_management {
   padding: 5px 10px;
   cursor: pointer;
 }
 
-.modal {
+.modal_invoice_management {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #007bff(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.modal-content {
+.modal-content_invoice_management {
   background-color: white;
   padding: 20px;
   border-radius: 5px;
   width: 400px;
 }
 
-.form-group {
+.form-group_invoice_management {
+  display: flex;
   margin-bottom: 15px;
 }
 
-.form-group label {
+.form-group label_invoice_management {
   display: block;
   margin-bottom: 5px;
 }
 
-.modal-actions {
+.modal-actions_invoice_management {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
   margin-top: 20px;
 }
 
-.status-wait {
+.status-wait_invoice_management {
   color: orange;
 }
 
-.status-pass {
+.status-pass_invoice_management {
   color: green;
 }
 
-.status-unpass {
+.status-unpass_invoice_management {
   color: red;
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './invoice-reimbursement.css';
-import { upload } from '@testing-library/user-event/dist/upload';
+import { toast, ToastContainer } from "react-toastify";
 
 function InvoiceReimbursement() {
   const [imageSrc, setImageSrc] = useState(null);
@@ -52,7 +52,7 @@ function InvoiceReimbursement() {
       }
     } catch (error) {
       console.log('OCR识别失败:', error);
-      alert('OCR识别失败，请稍后再试');
+      toast.error('OCR识别失败，请稍后再试');
     }
   };
 
@@ -122,6 +122,7 @@ function InvoiceReimbursement() {
         totalWithTaxInWords: ocrData.totalWithTaxInWords,
         totalWithoutTaxInNumbers: ocrData.totalWithoutTaxInNumbers,
         image: uploadResult.data,
+        remarks: formData.comments,
       };
 
       const saveResponse = await fetch(`${process.env.REACT_APP_API_BASE_URL}/user/save`, {
@@ -134,7 +135,7 @@ function InvoiceReimbursement() {
       });
 
       if (saveResponse.status === 200) {
-        alert('提交成功');
+        toast.success('提交成功');
         // 重置状态
         setImageSrc(null);
         setOcrData(null);
@@ -142,13 +143,26 @@ function InvoiceReimbursement() {
       }
     } catch (error) {
       console.error('提交失败:', error);
-      alert('提交过程中发生错误');
+      toast.error('提交过程中发生错误');
     }
   };
 
 
   return (
     <div className="invoice-reimbursement-container">
+      {/* Toast容器 */}
+                  <ToastContainer
+                    position="top-right"
+                    autoClose={3000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                  />
+                  
       {/* 图片上传区域*/}
       <div className="upload-area" style={imageStyle}>
         <input
@@ -228,3 +242,4 @@ function InvoiceReimbursement() {
 }
 
 export default InvoiceReimbursement;
+

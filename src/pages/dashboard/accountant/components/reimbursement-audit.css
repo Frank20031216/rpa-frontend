@@ -115,3 +115,9 @@
     color: white;
     border-color: #1890ff;
   }
+
+  .page-info {
+    margin-left: 12px;
+    color: #666;
+    font-size: 0.9em;
+  }

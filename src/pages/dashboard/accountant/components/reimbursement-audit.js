@@ -5,91 +5,108 @@ import { updateReimbursementStatus } from './utils';
 
 function ReimbursementAudit() {
 
+  
   const [editCount, setEditCount] = useState(0);
   const [auditItems, setAuditItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [searchParams, setSearchParams] = useState({
-    reimbursementNumber: '',
-    company: ''
+  // const [searchParams, setSearchParams] = useState({
+  //   reimbursementNumber: "",
+  //   company: ""
+  // });
+  const [searchId, setSearchId] = useState("");
+  const [searchCompany, setSearchCompany] = useState("");
+  const [statusCounts, setStatusCounts] = useState({
+    wait: 0,
+    read: 0,
   });
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
 
-  const pendingCount = auditItems.filter(item => item.status === 'wait').length;
-  const reviewedCount = auditItems.filter(item => item.status === 'approved' || item.status === 'rejected').length;
   const navigate = useNavigate();
 
-  function getCookie(name) {
-    const cookieArray = document.cookie.split('; '); // 按照分号和空格分割
-    for (let i = 0; i < cookieArray.length; i++) {
-        const cookiePair = cookieArray[i].split('='); // 按照等号分割
-        if (name === cookiePair[0]) {
-            return decodeURIComponent(cookiePair[1]); // 返回解码后的值
-        }
+  //统计数量
+  const fetchStatusCounts = async () => {
+    try {
+      const fetchCount = async (status) => {
+        const params = new URLSearchParams({ page: 1, pagesize: 1 });
+        if (status) params.append('status', status);
+        const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/accountant/page?${params.toString()}`, { credentials: 'include' });
+        const data = await res.json();
+        return data.data?.total || 0;
+      };
+
+      setStatusCounts({
+        wait: await fetchCount("wait"),
+        read: await fetchCount("approved") + await fetchCount("rejected"),
+      });
+    } catch (error) {
+      console.error('Error fetching status counts:', error);
     }
-    return null; // 如果没有找到对应的 Cookie，返回 null
-}
+  };
 
-  useEffect(() => {
-    // Fetch data from the API
-    console.log(getCookie('Authorization'))
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/accountant/page?page=${currentPage}&pageSize=${itemsPerPage}`, {
-          method: 'GET',
-          credentials: 'include'
-        });
+  //获取分页数据
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const params = new URLSearchParams({
+        page: currentPage,
+        pageSize: itemsPerPage,
+        status: 'wait',
+      });
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
+      //添加搜索参数
+      if (searchId) params.append('reimbursementNumber', searchId);
+      if (searchCompany) params.append('company', searchCompany);
+      //console.log(currentPage, itemsPerPage);
+      console.log(params);
 
-        const data = await response.json();
-        console.log(data)
-        if (data.status === '200') {
-          setAuditItems(data.data.record);
-          setFilteredItems(data.data.record);
-          setTotalPages(Math.ceil(data.data.total / itemsPerPage));
-          setLoading(false);
-        } else {
-          console.error('API Error:', data.message);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error('Fetch error:', error);
-        setLoading(false);
+
+      const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/accountant/page?${params.toString()}`, { credentials: 'include' });
+      if (!res.ok) throw new Error('Network response was not ok');
+      const result = await res.json();
+
+      if (result.status === "200") {
+        setAuditItems(result.data.record);
+        //console.log(params.page, params.pagesize, params.status);
+        console.log(result.data.record);
+        setTotalPages(Math.ceil(result.data.total / itemsPerPage));
       }
-    };
+    } catch (error) {
+      console.error('Fetch error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchData();
-  }, [currentPage, itemsPerPage,editCount]);
-
-  // Handle search when searchParams change
+  //初始化数据
   useEffect(() => {
-    const results = auditItems.filter(item => {
-      const matchesNumber = searchParams.reimbursementNumber === '' ||
-        item.reimbursementNumber.toString().includes(searchParams.reimbursementNumber);
+    fetchStatusCounts();
+  }, []);
 
-      const matchesCompany = searchParams.company === '' ||
-        item.seller.toLowerCase().includes(searchParams.company.toLowerCase());
+  //fetchdata
+  useEffect(() => {
+    fetchData();
+    //console.log(auditItems);
+    //console.log("1");
+  }, [currentPage, editCount, searchCompany, searchId]);
 
-      return matchesNumber && matchesCompany && item.status === 'wait';
-    });
-    setFilteredItems(results);
-    setCurrentPage(1); // Reset to first page when search changes
-  }, [searchParams, auditItems]);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchCompany, searchId]);
+
 
   const handleExport = () => {
     console.log('Export to Excel');
-    
+
     // 定义请求选项
     var requestOptions = {
       method: 'GET',
-      redirect: 'follow'
+      redirect: 'follow',
+      credentials: 'include'
     };
-  
+
     // 调用API接口
     fetch(`${process.env.REACT_APP_API_BASE_URL}/accountant/download`, requestOptions)
       .then(response => {
@@ -127,13 +144,13 @@ function ReimbursementAudit() {
     setEditCount(editCount + 1);
   };
 
-  const handleSearchChange = (e) => {
-    const { name, value } = e.target;
-    setSearchParams(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+  // const handleSearchChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setSearchParams(prev => ({
+  //     ...prev,
+  //     [name]: value
+  //   }));
+  // };
 
   const handleViewDetail = (item) => {
     navigate(`/accountant/components/reimbursement-detail/${item.id}`, {
@@ -144,21 +161,17 @@ function ReimbursementAudit() {
     });
   };
 
-  // Pagination logic
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <div className="container">
       {/* First Row: Status buttons and Export */}
       <div className="first-row">
         <div className="status-buttons">
-          <span className="status-button">待审核({pendingCount})</span>
-          <span className="status-button">已审核({reviewedCount})</span>
+          <span className="status-button">待审核({statusCounts.wait})</span>
+          <span className="status-button">已审核({statusCounts.read})</span>
         </div>
         <button className="export-button" onClick={handleExport}>导出EXCEL</button>
-        
+
       </div>
 
       {/* Second Row: Search fields */}
@@ -168,16 +181,16 @@ function ReimbursementAudit() {
           name="reimbursementNumber"
           placeholder="报销编号"
           className="search-input"
-          value={searchParams.reimbursementNumber}
-          onChange={handleSearchChange}
+          value={searchId}
+          onChange={(e) => setSearchId(e.target.value)}
         />
         <input
           type="text"
           name="company"
           placeholder="单位名称"
           className="search-input"
-          value={searchParams.company}
-          onChange={handleSearchChange}
+          value={searchCompany}
+          onChange={ (e) => setSearchCompany(e.target.value) }
         />
       </div>
 
@@ -198,12 +211,12 @@ function ReimbursementAudit() {
             <tr>
               <td colSpan="6" className="no-data">加载中...</td>
             </tr>
-          ) : currentItems.length > 0 ? (
-            currentItems.map(item => (
+          ) : auditItems.length > 0 ? (
+            auditItems.map(item => (
               <tr key={item.id}>
                 <td>{item.reimbursementNumber}</td>
                 <td>{item.title}</td>
-                <td>{item.amount.toLocaleString()}</td>
+                <td>{item.amount}</td>
                 <td>{item.buyer}</td>
                 <td>{item.seller}</td>
                 <td>
@@ -237,7 +250,7 @@ function ReimbursementAudit() {
       </table>
 
       {/* Pagination */}
-      {filteredItems.length > itemsPerPage && (
+      {auditItems.length > 0 && (
         <div className="pagination">
           <button
             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
@@ -275,6 +288,11 @@ function ReimbursementAudit() {
           >
             下一页
           </button>
+
+          <span className="page-info">
+            第 {currentPage} 页 / 共 {totalPages} 页
+          </span>
+
         </div>
       )}
     </div>
@@ -282,3 +300,4 @@ function ReimbursementAudit() {
 }
 
 export default ReimbursementAudit;
+

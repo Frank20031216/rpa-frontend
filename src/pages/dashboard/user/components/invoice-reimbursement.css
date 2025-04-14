@@ -127,3 +127,27 @@
 .verification-buttons button:nth-child(2):hover {
   background-color: #1e6e2f; /* 鼠标悬停时的深绿色背景 */
 }
+.pdf-preview {
+  width: 100%;
+  height: 100%;
+  border: 2px dashed #ddd;
+  background: white;
+}
+
+.pdf-preview canvas {
+  margin: 10px 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.upload-area {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.upload-input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
